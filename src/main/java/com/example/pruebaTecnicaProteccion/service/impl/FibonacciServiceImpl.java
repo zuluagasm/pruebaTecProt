@@ -1,6 +1,7 @@
 package com.example.pruebaTecnicaProteccion.service.impl;
 
 import com.example.pruebaTecnicaProteccion.entity.Fibonacci;
+import com.example.pruebaTecnicaProteccion.helpers.MailManager;
 import com.example.pruebaTecnicaProteccion.repository.FibonacciRepository;
 import com.example.pruebaTecnicaProteccion.service.FibonacciService;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.List;
 public class FibonacciServiceImpl implements FibonacciService {
 
     private FibonacciRepository fibonacciRepository;
+    private MailManager mailManager;
 
     //Inyección de dependencia del repositorio por constructor.
-    FibonacciServiceImpl(FibonacciRepository fibonacciRepository){
+    public FibonacciServiceImpl(FibonacciRepository fibonacciRepository, MailManager mailManager){
         this.fibonacciRepository = fibonacciRepository;
+        this.mailManager = mailManager;
     }
 
     // Servicio privado para generar la serie.
@@ -61,6 +64,10 @@ public class FibonacciServiceImpl implements FibonacciService {
         return fibonacciRegister;
     }
 
+    private void sendEmail(String email, String subject, String message){
+        mailManager.sendMail(email, subject, message);
+    }
+
     @Override
     public List<Fibonacci> findAll() {
         List<Fibonacci> fibonacciList = new ArrayList<Fibonacci>();
@@ -77,8 +84,13 @@ public class FibonacciServiceImpl implements FibonacciService {
     public Fibonacci generateAutomaticSerie(){
         Fibonacci generatedSerie = new Fibonacci();
         try {
+            //Generacion y guardado de la serie
             generatedSerie = generateFibonacci(null);
             fibonacciRepository.save(generatedSerie);
+            //Envío de emails
+            sendEmail("santimzuluaga01@hotmail.com", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
+            sendEmail("didier.correa@oproteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
+            sendEmail("correalondon@oproteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
         }
         catch(Exception ex){
             System.err.println("Error al generar serie Fibonacci con hora del sistema: " + ex.getMessage());
@@ -90,8 +102,15 @@ public class FibonacciServiceImpl implements FibonacciService {
     public Fibonacci generateManualSerie(LocalTime time){
         Fibonacci generatedSerie = new Fibonacci();
         try {
+
+            //Generacion y guardado de la serie
             generatedSerie = generateFibonacci(time);
             fibonacciRepository.save(generatedSerie);
+
+            //Envío de emails
+            sendEmail("santimzuluaga01@hotmail.com", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Manual",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
+            sendEmail("didier.correa@oproteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Manual",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
+            sendEmail("correalondon@oproteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Manual",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
         }
         catch(Exception ex){
             System.err.println("Error al generar serie Fibonacci con hora externa: " + ex.getMessage());

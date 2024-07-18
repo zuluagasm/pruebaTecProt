@@ -15,7 +15,7 @@ public class FibonacciController {
 
     private FibonacciService fibonacciService;
 
-    FibonacciController(FibonacciService fibonacciService){
+    public FibonacciController(FibonacciService fibonacciService){
         this.fibonacciService = fibonacciService;
     }
 

@@ -89,8 +89,8 @@ public class FibonacciServiceImpl implements FibonacciService {
             fibonacciRepository.save(generatedSerie);
             //Envío de emails
             sendEmail("santimzuluaga01@hotmail.com", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
-            sendEmail("didier.correa@oproteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
-            sendEmail("correalondon@oproteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
+            sendEmail("didier.correa@proteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
+            sendEmail("correalondon@proteccion.com.co", "Prueba Técnica - Santiago Zuluaga Hoyos - Generacion Hora Automatica",  "Hora Generacion: " + generatedSerie.getTime().toString() + "// Serie Generada" + generatedSerie.getSerieFibonacci().toString());
         }
         catch(Exception ex){
             System.err.println("Error al generar serie Fibonacci con hora del sistema: " + ex.getMessage());
